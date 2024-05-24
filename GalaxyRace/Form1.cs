@@ -28,10 +28,6 @@ namespace GalaxyRace
         List<int> planetSpeeds = new List<int>();
         List<int> planetSizes = new List<int>();
         List<string> planetColours = new List<string>();
-        /*int[] planetSizes = {15, 30, 45, 60, 75, 90, 100 };*/
-
-        int planetSpeed = 4;
-        int planetSize = 30;
 
         bool upPressed = false;
         bool downPressed = false;
@@ -44,6 +40,7 @@ namespace GalaxyRace
         SolidBrush redBrush = new SolidBrush(Color.Red);
         SolidBrush purpleBrush = new SolidBrush(Color.Purple);
         SolidBrush grayBrush = new SolidBrush(Color.Gray);
+        Pen whitePen = new Pen(Color.White, 8);
 
         Random randGen = new Random();
         int randValue = 0;
@@ -51,8 +48,7 @@ namespace GalaxyRace
         int player1Score;
         int player2Score;
 
-        int timer = 1000;
-
+        int timer = 0;
         public SpaceRace()
         {
             InitializeComponent();
@@ -69,7 +65,7 @@ namespace GalaxyRace
             player1Score = 0;
             player2Score = 0;
 
-            timer = 1000;
+            timer = 0;
             player1.Y = 410;
             player2.Y = 410;
 
@@ -97,6 +93,7 @@ namespace GalaxyRace
                     {
                         InitializeGame();
                         gameTimer.Enabled = true;
+                        clockTimer.Enabled = true;
                     }
                     break;
                 case Keys.Up:
@@ -158,132 +155,128 @@ namespace GalaxyRace
             //Draw planets across screen
             for (int i = 0; i < planets.Count(); i++)
             {
+                randValue = randGen.Next(1, 3);
+
                 int x = planets[i].X + planetSpeeds[i];
 
-                planets[i] = new Rectangle(x, planets[i].Y, planetSizes[i], planetSizes[i]);
+                planets[i] = new Rectangle(x, planets[i].Y, planets[i].Width, planets[i].Height);
             }
 
             //Add planets needed
             randValue = randGen.Next(0, 101);
 
-            for (int i = 0; i < planets.Count(); i++)
+
+            if (randValue > 98)
             {
-                if (randValue > 98)
-                {
 
-                    //randValue = randGen.Next(0, this.Height);
-                    //int planetRandom = randGen.Next(0, 6);
+                int y = randGen.Next(0, 375);
+                int size = randGen.Next(60, 65);
 
-                    Rectangle projectile = new Rectangle(0, randValue, 0, 0);
+                Rectangle projectile = new Rectangle(0, y, size, size);
 
-
-                    planets.Add(projectile);
-                    planetSpeeds.Add(randGen.Next(5, 12));
-                    planetSizes.Add(randGen.Next(60, 65));
-                    planetColours.Add("Blue");
+                planets.Add(projectile);
+                planetSpeeds.Add(randGen.Next(5, 12));
+                planetColours.Add("Blue");
 
 
-                }
-                else if (randValue <= 98 && randValue > 95)
-                {
-
-                    //randValue = randGen.Next(0, this.Height);
-                    //int planetRandom = randGen.Next(0, 6);
-
-                    Rectangle projectile = new Rectangle(0, randValue, 0, 0);
-
-
-                    planets.Add(projectile);
-                    planetSpeeds.Add(randGen.Next(5, 12));
-                    planetSizes.Add(randGen.Next(55, 60));
-                    planetColours.Add("Red");
-
-                }
-                else if (randValue <= 95 && randValue > 92)
-                {
-
-                    //randValue = randGen.Next(0, this.Height);
-                    //int planetRandom = randGen.Next(0, 6);
-
-                    Rectangle projectile = new Rectangle(0, randValue, 0, 0);
-
-
-                    planets.Add(projectile);
-                    planetSpeeds.Add(randGen.Next(5, 12));
-                    planetSizes.Add(randGen.Next(45, 50));
-                    planetColours.Add("Yellow");
-
-                }
-                else if (randValue <= 92 && randValue > 89)
-                {
-
-                    //randValue = randGen.Next(0, this.Height);
-                    //int planetRandom = randGen.Next(0, 6);
-
-                    Rectangle projectile = new Rectangle(0, randValue, 0, 0);
-
-
-                    planets.Add(projectile);
-                    planetSpeeds.Add(randGen.Next(5, 12));
-                    planetSizes.Add(randGen.Next(35, 40));
-                    planetColours.Add("Purple");
-
-
-                }
-                else if (randValue <= 89 && randValue > 86)
-                {
-
-                    //randValue = randGen.Next(0, this.Height);
-                    //int planetRandom = randGen.Next(0, 6);
-
-                    Rectangle projectile = new Rectangle(0, randValue, 0, 0);
-
-
-                    planets.Add(projectile);
-                    planetSpeeds.Add(randGen.Next(5, 12));
-                    planetSizes.Add(randGen.Next(25, 30));
-                    planetColours.Add("Orange");
-
-
-                }
-                else if (randValue <= 86 && randValue > 83)
-                {
-
-                    //randValue = randGen.Next(0, this.Height);
-                    //int planetRandom = randGen.Next(0, 6);
-
-                    Rectangle projectile = new Rectangle(0, randValue, 0, 0);
-
-
-                    planets.Add(projectile);
-                    planetSpeeds.Add(randGen.Next(5, 12));
-                    planetSizes.Add(randGen.Next(15, 20));
-                    planetColours.Add("Gray");
-
-
-                }
             }
+            else if (randValue <= 98 && randValue > 95)
+            {
+
+                int y = randGen.Next(0, 375);
+                int size = randGen.Next(50, 55);
+
+                Rectangle projectile = new Rectangle(800, y, size, size);
+
+
+                planets.Add(projectile);
+                planetSpeeds.Add(randGen.Next(-12, -5));
+                planetColours.Add("Red");
+
+            }
+            else if (randValue <= 95 && randValue > 92)
+            {
+
+                int y = randGen.Next(0, 375);
+                int size = randGen.Next(45, 50);
+
+                Rectangle projectile = new Rectangle(0, y, size, size);
+
+
+                planets.Add(projectile);
+                planetSpeeds.Add(randGen.Next(5, 12));
+                planetColours.Add("Yellow");
+
+            }
+            else if (randValue <= 92 && randValue > 89)
+            {
+
+                int y = randGen.Next(0, 375);
+                int size = randGen.Next(35, 40);
+
+                Rectangle projectile = new Rectangle(800, y, size, size);
+
+
+                planets.Add(projectile);
+                planetSpeeds.Add(randGen.Next(-12, -5));
+                planetColours.Add("Purple");
+                
+
+            }
+            else if (randValue <= 89 && randValue > 86)
+            {
+
+                int y = randGen.Next(0, 375);
+                int size = randGen.Next(25, 30);
+
+                Rectangle projectile = new Rectangle(0, y, size, size);
+
+
+                planets.Add(projectile);
+                planetSpeeds.Add(randGen.Next(5, 12));
+                planetColours.Add("Orange");
+
+
+            }
+            else if (randValue <= 86 && randValue > 81)
+            {
+
+                int y = randGen.Next(0, 375);
+                int size = randGen.Next(15, 20);
+
+                Rectangle projectile = new Rectangle(0, y, size, size);
+
+
+                planets.Add(projectile);
+                planetSpeeds.Add(randGen.Next(-12, -5));
+                planetSizes.Add(randGen.Next(15, 20));
+                planetColours.Add("Gray");
+
+
+            }
+
             //Remove planets when off screen
-            for (int i = 0; i < planets.Count(); i++)
-            {
-                if (planets[i].X > this.Width)
-                {
-                    planets.RemoveAt(i);
-                    planetSpeeds.RemoveAt(i);
+            //for (int i = 0; i < planets.Count(); i++)
+            //{
+            //    if (planets[i].X > this.Width)
+            //    {
+            //        planets.RemoveAt(i);
+            //        planetSpeeds.RemoveAt(i);
+            //        planetColours.RemoveAt(i);
 
-                }
-            }
+            //    }
+            //}
 
             //Check to see for collison
             for (int i = 0; i < planets.Count(); i++)
             {
                 if (planets[i].IntersectsWith(player1))
                 {
-
+                    player1.Y = 410;
                 }
                 if (planets[i].IntersectsWith(player2))
                 {
-
+                    player2.Y = 420;
                 }
             }
 
@@ -307,27 +300,22 @@ namespace GalaxyRace
             if (player1Score == 3)
             {
                 gameTimer.Enabled = false;
-                titleLabel.Text = "P1 WINS";
+                subtitleLabel.Text = "PLAYER 1 WINS";
 
             }
             else if (player2Score == 3)
             {
                 gameTimer.Enabled = false;
-                titleLabel.Text = "P2 WINS";
+                subtitleLabel.Text = "PLAYER 2 WINS";
             }
 
-            timer--;
-            if (timer <= 0)
-            {
-                gameTimer.Enabled = false;
-            }
 
             Refresh();
         }
 
         private void SpaceRace_Paint(object sender, PaintEventArgs e)
         {
-            if (gameTimer.Enabled == false && timer == 1000)
+            if (gameTimer.Enabled == false && timer == 0)
             {
                 titleLabel.Text = "SPACE RACE";
                 subtitleLabel.Text = "PRESS SPACE TO START OR ESC TO EXIT";
@@ -336,16 +324,68 @@ namespace GalaxyRace
             {
                 for (int i = 0; i < planets.Count(); i++)
                 {
-                    e.Graphics.FillEllipse(orangeBrush, planets[i]);
+                    if (planetColours[i] == "Blue")
+                    {
+                        e.Graphics.FillEllipse(blueBrush, planets[i]);
+                    }
+                    else if (planetColours[i] == "Purple")
+                    {
+                        e.Graphics.FillEllipse(purpleBrush, planets[i]);
+                    }
+                    else if (planetColours[i] == "Orange")
+                    {
+                        e.Graphics.FillEllipse(orangeBrush, planets[i]);
+                    }
+                    else if (planetColours[i] == "Red")
+                    {
+                        e.Graphics.FillEllipse(redBrush, planets[i]);
+                    }
+                    else if (planetColours[i] == "Gray")
+                    {
+                        e.Graphics.FillEllipse(grayBrush, planets[i]);
+                    }
+                    else if (planetColours[i] == "Yellow")
+                    {
+                        e.Graphics.FillEllipse(YellowBrush, planets[i]);
+                    }
                 }
                 e.Graphics.FillRectangle(orangeBrush, player1);
                 e.Graphics.FillRectangle(orangeBrush, player2);
+                e.Graphics.DrawLine(whitePen, 400, 450, 400, timer);
             }
             else
             {
-                subtitleLabel.Text = "PRESS SPACE TO START OR ESC TO EXIT";
+                titleLabel.Text = "Game Over";
+                subtitleLabel.Text += "\n\nPRESS SPACE TO START OR ESC TO EXIT";
+                p1ScoreLabel.Text = "";
+                p2ScoreLabel.Text = "";
             }
 
+        }
+
+        private void clockTimer_Tick(object sender, EventArgs e)
+        {
+            timer++;
+            if (timer >= 450)
+            {
+                if (player1Score > player2Score)
+                {
+                    gameTimer.Enabled = false;
+                    subtitleLabel.Text = "PLAYER 1 WINS";
+
+                }
+                else if (player2Score > player1Score)
+                {
+                    gameTimer.Enabled = false;
+                    subtitleLabel.Text = "PLAYER 2 WINS";
+                }
+                else
+                {
+                    titleLabel.Text = "OVERTIME";
+
+                }
+            }
+            Refresh();
         }
     }
 }

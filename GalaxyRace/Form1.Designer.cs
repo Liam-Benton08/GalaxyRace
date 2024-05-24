@@ -34,6 +34,7 @@
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.p1ScoreLabel = new System.Windows.Forms.Label();
             this.p2ScoreLabel = new System.Windows.Forms.Label();
+            this.clockTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // titleLabel
@@ -53,9 +54,9 @@
             this.subtitleLabel.BackColor = System.Drawing.Color.Transparent;
             this.subtitleLabel.Font = new System.Drawing.Font("NSimSun", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.subtitleLabel.ForeColor = System.Drawing.Color.White;
-            this.subtitleLabel.Location = new System.Drawing.Point(12, 245);
+            this.subtitleLabel.Location = new System.Drawing.Point(12, 217);
             this.subtitleLabel.Name = "subtitleLabel";
-            this.subtitleLabel.Size = new System.Drawing.Size(776, 44);
+            this.subtitleLabel.Size = new System.Drawing.Size(776, 131);
             this.subtitleLabel.TabIndex = 1;
             this.subtitleLabel.Text = "PRESS SPACE TO START OR ESC TO EXIT";
             this.subtitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -85,6 +86,11 @@
             this.p2ScoreLabel.Size = new System.Drawing.Size(138, 38);
             this.p2ScoreLabel.TabIndex = 3;
             // 
+            // clockTimer
+            // 
+            this.clockTimer.Interval = 5;
+            this.clockTimer.Tick += new System.EventHandler(this.clockTimer_Tick);
+            // 
             // SpaceRace
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -113,6 +119,7 @@
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.Label p1ScoreLabel;
         private System.Windows.Forms.Label p2ScoreLabel;
+        private System.Windows.Forms.Timer clockTimer;
     }
 }
 
