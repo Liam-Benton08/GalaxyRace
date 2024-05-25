@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
@@ -18,6 +19,9 @@ namespace GalaxyRace
 {
     public partial class SpaceRace : Form
     {
+        SoundPlayer collision = new SoundPlayer(Properties.Resources.collisionSound);
+        SoundPlayer clapping = new SoundPlayer(Properties.Resources.clappingSound);
+        SoundPlayer yay = new SoundPlayer(Properties.Resources.yaySound);
 
         Rectangle player1 = new Rectangle(190, 420, 20, 30);
         Rectangle player2 = new Rectangle(590, 420, 20, 30);
@@ -100,6 +104,7 @@ namespace GalaxyRace
                         InitializeGame();
                         gameTimer.Enabled = true;
                         clockTimer.Enabled = true;
+                        clapping.Stop();
                     }
                     break;
                 case Keys.Up:
@@ -380,6 +385,8 @@ namespace GalaxyRace
                     planets.RemoveAt(i);
                     planetSpeeds.RemoveAt(i);
                     planetColours.RemoveAt(i);
+
+                    collision.Play();
                 }
                 if (planets[i].IntersectsWith(player2))
                 {
@@ -387,6 +394,8 @@ namespace GalaxyRace
                     planets.RemoveAt(i);
                     planetSpeeds.RemoveAt(i);
                     planetColours.RemoveAt(i);
+
+                    collision.Play();
                 }
             }
         }
@@ -398,6 +407,7 @@ namespace GalaxyRace
                 player1.Y = 410;
                 player1Score++;
                 p1ScoreLabel.Text = $"{player1Score}";
+                yay.Play();
 
             }
             if (player2.Y <= 0)
@@ -405,19 +415,23 @@ namespace GalaxyRace
                 player2.Y = 410;
                 player2Score++;
                 p2ScoreLabel.Text = $"{player2Score}";
+                yay.Play();
             }
 
             //Check to see if there is a winner
             if (player1Score == 3)
             {
+                yay.Stop();
                 gameTimer.Enabled = false;
                 subtitleLabel.Text = "PLAYER 1 WINS";
-
+                clapping.Play();
             }
             else if (player2Score == 3)
             {
+                yay.Stop();
                 gameTimer.Enabled = false;
                 subtitleLabel.Text = "PLAYER 2 WINS";
+                clapping.Play();
             }
         }
     }
