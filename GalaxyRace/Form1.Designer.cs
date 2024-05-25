@@ -88,7 +88,6 @@
             // 
             // clockTimer
             // 
-            this.clockTimer.Interval = 5;
             this.clockTimer.Tick += new System.EventHandler(this.clockTimer_Tick);
             // 
             // SpaceRace
